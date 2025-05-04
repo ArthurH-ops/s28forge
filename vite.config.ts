@@ -10,5 +10,23 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
-  // ... rest of your config
+  plugins: [
+    react(),
+    mode === 'development' &&
+    componentTagger(),
+  ].filter(Boolean),
+  resolve: {
+    alias: [
+      {
+        find: "@",
+        replacement: path.resolve(__dirname, "./src")
+      }
+    ],
+  },
+  build: {
+    sourcemap: mode !== 'production',
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  },
 }));
